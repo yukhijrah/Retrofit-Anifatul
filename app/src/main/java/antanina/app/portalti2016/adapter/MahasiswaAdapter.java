@@ -15,27 +15,46 @@ import antanina.app.portalti2016.holder.MahasiswaHolder;
 public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaHolder> {
 
     private List<Mahasiswa> mahasiswas;
+    private MahasiswaListener listener;
+
+    public MahasiswaAdapter(List<Mahasiswa> mahasiswas, MahasiswaListener listener) {
+        this.mahasiswas = mahasiswas;
+        this.listener = listener;
+    }
 
     public MahasiswaAdapter(List<Mahasiswa> mahasiswas) {
         this.mahasiswas = mahasiswas;
     }
 
-
+    public void setListener(MahasiswaListener listener) {
+        this.listener = listener;
+    }
     @NonNull
     @Override
     public MahasiswaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mahasiswa,parent, false);
-        MahasiswaHolder holder = new MahasiswaHolder(view);
-        return holder;
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mahasiswa,parent, false);
+        final MahasiswaHolder mahasiswaHolder = new MahasiswaHolder(itemView);
+        return mahasiswaHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MahasiswaHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MahasiswaHolder holder, final int position) {
+        holder.txtName.setText(mahasiswas.get(position).getName());
+        holder.txtNim.setText(mahasiswas.get(position).getNim());
+        //fungsi delete
+        holder.btnDelete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                listener.onDelete(mahasiswas.get(position).getId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mahasiswas.size();
+    }
+    public interface MahasiswaListener {
+        void onDelete(int mhsId);
     }
 }

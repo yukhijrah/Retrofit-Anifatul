@@ -47,14 +47,18 @@ public class AddMahasiswaActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     finish(); // akan menghapus activity sebelumnya
                 }else{
-                    Toast.makeText(AddMahasiswaActivity.this, "Maaf terjadi kesalahan", Toast.LENGTH_LONG).show();
+                    onErrorMahasiswa();
                 }
             }
 
             @Override
             public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                Toast.makeText(AddMahasiswaActivity.this, "Maaf terjadi kesalahan", Toast.LENGTH_LONG).show();
+                onErrorMahasiswa();
             }
         });
+    }
+    private void onErrorMahasiswa(){
+        Toast.makeText(AddMahasiswaActivity.this, "Maaf, terjadi kesalahan", Toast.LENGTH_SHORT).show();
+
     }
 }
