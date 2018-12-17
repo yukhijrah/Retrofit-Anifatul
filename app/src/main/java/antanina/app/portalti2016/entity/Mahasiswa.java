@@ -1,6 +1,8 @@
 package antanina.app.portalti2016.entity;
 
-public class Mahasiswa  {
+import java.io.Serializable;
+
+public class Mahasiswa implements Serializable {
     private int id;
 
     private String name;
